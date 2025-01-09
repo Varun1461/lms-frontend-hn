@@ -1,13 +1,13 @@
-import './App.css'
+import './App.css' 
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return <>
-lms
-    </>
+  return (
+     <>
+      lms
+     </>
       
-  
+  )   
 }
 
 export default App
