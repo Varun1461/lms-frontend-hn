@@ -49,6 +49,11 @@ npx tailwindcss init
 @tailwind components;
 @tailwind utilities;
 '''
+5. Add the following details in the plugins property of tailwing config
+'''
+require("daisyui"), require("@tailwindcss/line-clamp")
+'''
+
 
 ### adding plugins and dependencies
 
@@ -56,7 +61,8 @@ npx tailwindcss init
 npm install @reduxjs/toolkit react-redux react-router-dom react-icons react-chartjs-2 chart.js daisyui axi os react-hot-toast @tailwindcss/line-clamp
 
 '''
-7. post css autoprefixer
+1. post css autoprefixer
 '''
 npm install postcss autoprefixer
 '''
+
