@@ -8,93 +8,114 @@ const Layout = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // for checking user logged in or not
   const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
-
-  // for dispaying the options, according to user role
   const role = useSelector((state) => state?.auth?.role);
 
-  // function to hide the drawer on close button click
   function hideDrawer() {
-    const element = document.getElementsByClassName("drawer-toggle");
-    element[0].checked = false;
+    const drawerToggle = document.querySelector("#my-drawer");
+    if (drawerToggle) drawerToggle.checked = false;
+  }
 
-    // collapsing the drawer-side width to zero
-    const drawerSide = document.getElementsByClassName("drawer-side");
-    drawerSide[0].style.width = 0;
-  };
+  function changeWidth() {
+    const drawerSide = document.querySelector(".drawer-side");
+    if (drawerSide) {
+      drawerSide.style.width = "auto";
+    }
+  }
 
-  // function for changing the drawer width on menu button click
- function changeWidth  ()  {
-    const drawerSide = document.getElementsByClassName("drawer-side");
-    drawerSide[0].style.width = "auto";
-  };
-
-  // function to handle logout
   function handleLogout(e) {
     e.preventDefault();
-
-    // calling logout action
-    // const res = await dispatch(logout());
-
-    // redirect to home page if true
-    // if (res?.payload?.success) 
     navigate("/");
   }
 
   return (
     <div className="min-h-[90vh]">
-      {/* adding the daisy ui drawer */}
-      <div className="drawer absolute z-50 left-0 w-fit">
+      <div className="drawer absolute z-50 left-0">
+        {/* Drawer Input Toggle */}
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
-          <label htmlFor="my-drawer" className="cursor-pointer relative">
+          {/* Sidebar Menu Button */}
+          <label htmlFor="my-drawer" className="cursor-pointer fixed top-4 left-4">
             <FiMenu
               onClick={changeWidth}
               size={"32px"}
-              className="font-bold text-white m-4"
+              className="font-bold text-white"
             />
           </label>
         </div>
 
-        <div className="drawer-side w-0">
+        {/* Sidebar Drawer */}
+        <div className="drawer-side">
           <label htmlFor="my-drawer" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-48 sm:w-80 bg-base-100 text-base-content relative">
-            {/* close button for drawer */}
-            <li className="w-fit absolute right-2 z-50">
-              <button onClick={hideDrawer}>
-                <AiFillCloseCircle size={24} />
+          <ul className="menu p-4 w-72 h-full bg-gray-900 text-white relative">
+            {/* Close Button */}
+            <li className="absolute top-4 right-4 z-50">
+              <button
+                onClick={hideDrawer}
+                className="bg-transparent hover:bg-gray-700 p-1 rounded-full"
+              >
+                <AiFillCloseCircle size={24} className="text-white" />
               </button>
             </li>
 
-            <li>
-              <Link to={"/"}>Home</Link>
+            {/* Sidebar Links */}
+            <li className="text-left">
+              <Link
+                to={"/"}
+                className="relative group p-2 rounded text-white block"
+              >
+                <span className="relative inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 group-hover:after:w-full">
+                  Home
+                </span>
+              </Link>
             </li>
-
-            {/* displaying dashboard, if user is logged in */}
             {isLoggedIn && role === "ADMIN" && (
-              <li>
-                <Link to={"/admin/dashboard"}>Admin Dashboard</Link>
+              <li className="text-left">
+                <Link
+                  to={"/admin/dashboard"}
+                  className="relative group p-2 rounded text-white block"
+                >
+                  <span className="relative inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 group-hover:after:w-full">
+                    Admin Dashboard
+                  </span>
+                </Link>
               </li>
             )}
-
-            <li>
-              <Link to={"/courses"}>All Courses</Link>
+            <li className="text-left">
+              <Link
+                to={"/courses"}
+                className="relative group p-2 rounded text-white block"
+              >
+                <span className="relative inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 group-hover:after:w-full">
+                  All Courses
+                </span>
+              </Link>
+            </li>
+            <li className="text-left">
+              <Link
+                to={"/contact"}
+                className="relative group p-2 rounded text-white block"
+              >
+                <span className="relative inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 group-hover:after:w-full">
+                  Contact Us
+                </span>
+              </Link>
+            </li>
+            <li className="text-left">
+              <Link
+                to={"/about"}
+                className="relative group p-2 rounded text-white block"
+              >
+                <span className="relative inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 group-hover:after:w-full">
+                  About Us
+                </span>
+              </Link>
             </li>
 
-            <li>
-              <Link to={"/contact"}>Contact Us</Link>
-            </li>
-
-            <li>
-              <Link to={"/about"}>About Us</Link>
-            </li>
-
-            {/* creating the bottom part of drawer */}
-            {/* if user is not logged in */}
+            {/* Login/Signup Buttons */}
             {!isLoggedIn && (
-              <li className="mt-4">
-                <div className="flex items-center gap-0">
+              <li className="absolute bottom-4 left-0 w-full px-4">
+                <div className="flex">
                   <Link to="/login" className="w-1/2">
                     <button className="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 w-full rounded-l-lg">
                       Login
@@ -109,15 +130,20 @@ const Layout = ({ children }) => {
               </li>
             )}
 
-            {/* if user is logged in */}
+            {/* Logout/Profile Buttons */}
             {isLoggedIn && (
-              <li className="absolute bottom-4 w-[90%]">
-                <div className="w-full flex items-center justify-center">
-                  <button className="btn-primary px-4 py-1 font-semibold rounded-md w-full">
-                    <Link to={"/user/profile"}>Profile</Link>
-                  </button>
-                  <button className="btn-secondary px-4 py-1 font-semibold rounded-md w-full">
-                    <Link onClick={handleLogout}>Logout</Link>
+              <li className="absolute bottom-4 left-0 w-full px-4">
+                <div className="flex gap-2">
+                  <Link to="/user/profile" className="w-full">
+                    <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 w-full rounded-md">
+                      Profile
+                    </button>
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 w-full rounded-md"
+                  >
+                    Logout
                   </button>
                 </div>
               </li>
@@ -127,8 +153,6 @@ const Layout = ({ children }) => {
       </div>
 
       {children}
-
-      {/* adding the footer content */}
       <Footer />
     </div>
   );
