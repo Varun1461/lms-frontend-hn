@@ -1,9 +1,10 @@
 import './App.css';
 import { Route,Routes } from 'react-router-dom';
 
-import HomePage from './Pages/HomePage';
-import AboutUs from './Pages/AboutUs';
-import NotFound from './Pages/NotFound';
+import HomePage from '../src/Pages/HomePage.jsx';
+import AboutUs from '../src/Pages/AboutUs.jsx';
+import NotFound from '../src/Pages/NotFound.jsx';
+import Signup from '../src/Pages/Signup.jsx';
 
 function App() {
   return (
@@ -11,7 +12,9 @@ function App() {
     <>
     <Routes>
      <Route path="/" element={<HomePage />} ></Route> 
-     <Route path="/about" element={<AboutUs />} ></Route> 
+     <Route path="/about" element={<AboutUs />} ></Route>
+
+     <Route path="/signup" element={<Signup />} ></Route>
 
      <Route path="*" element={<NotFound />}></Route>
 
