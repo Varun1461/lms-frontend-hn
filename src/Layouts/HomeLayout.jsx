@@ -44,20 +44,19 @@ const Layout = ({ children }) => {
           </label>
         </div>
 
-        {/* Sidebar Drawer */}
-        <div className="drawer-side">
-          <label htmlFor="my-drawer" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-72 h-full bg-gray-900 text-white relative">
-            {/* Close Button */}
-            <li className="absolute top-4 right-4 z-50">
-              <button
-                onClick={hideDrawer}
-                className="bg-transparent hover:bg-gray-700 p-1 rounded-full"
-              >
-                <AiFillCloseCircle size={24} className="text-white" />
-              </button>
-            </li>
-
+    {/* Sidebar Drawer */}
+<div className="drawer-side">
+  <label htmlFor="my-drawer" className="drawer-overlay"></label>
+  <ul className="menu p-4 w-72 h-full bg-black/70 backdrop-blur-md text-white relative">
+    {/* Close Button */}
+    <li className="absolute top-4 right-4 z-50">
+      <button
+        onClick={hideDrawer}
+        className="bg-transparent hover:bg-gray-700 p-1 rounded-full"
+      >
+        <AiFillCloseCircle size={24} className="text-white" />
+      </button>
+    </li>
             {/* Sidebar Links */}
             <li className="text-left">
               <Link

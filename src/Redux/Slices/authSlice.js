@@ -22,8 +22,8 @@ export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
     });
 
     // getting response resolved here
-    res = await res;
-    return res.data;
+    
+    return (await res).data;
   } catch (error) {
     toast.error(error?.response?.data?.message);
   }

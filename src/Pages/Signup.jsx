@@ -51,60 +51,57 @@ function Signup() {
 
     async function createNewAccount(event) {
         event.preventDefault();
+    
         if (!signupData.email || !signupData.password || !signupData.fullName || !signupData.avatar) {
-            toast.error("please fill all the details");
+            toast.error("Please fill all the details");
             return;
         }
-
-        // checking name field length
+    
         if (signupData.fullName.length < 5) {
-            toast.error("Name should be atleast of 5 characters")
+            toast.error("Name should be at least 5 characters long");
             return;
         }
-
-        //checking valid email
-
+    
         if (!signupData.email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-            toast.error("Invalid email id");
+            toast.error("Invalid email ID");
             return;
         }
-
-        //checking password validation
-
+    
         if (!signupData.password.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)) {
-            toast.error("Password should be 6 - 16 character long with atleast a number and special character ");
+            toast.error("Password should be 6-16 characters long with at least a number and special character");
             return;
         }
+    
         const formData = new FormData();
         formData.append("fullName", signupData.fullName);
         formData.append("email", signupData.email);
         formData.append("password", signupData.password);
         formData.append("avatar", signupData.avatar);
-
-        //dispatch create account action
-
+    
+        // ✅ Debug FormData before sending
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+    
+        // Dispatch create account action
         const response = await dispatch(createAccount(formData));
-
-        if (response.payload && response.payload.success) {
+    
+        if (response?.payload?.success) {
             navigate("/");
         } else {
-            console.error("Signup failed:", response.payload || "Unknown error");
+            console.log("Signup failed", response.payload || "Unknown error");
         }
-        
+    
         setSignupData({
             fullName: "",
             email: "",
             password: "",
             avatar: ""
         });
-        
-        setPreviewImage("");
-        
-
+    
         setPreviewImage("");
     }
-
-
+    
 
     return (
         <HomeLayout>
